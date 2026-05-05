@@ -1,4 +1,4 @@
-# Wazuh EDR Homelab — Project 3
+# Wazuh EDR Homelab 
 
 > Open-source endpoint detection and response (EDR) platform deployed across a multi-VM homelab environment. Built as part of an active cybersecurity portfolio documenting hands-on SOC analyst skills.
 
