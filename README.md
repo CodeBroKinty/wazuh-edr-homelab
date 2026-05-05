@@ -1,4 +1,4 @@
-# Wazuh EDR Homelab 
+# Wazuh EDR Homelab
 
 > Open-source endpoint detection and response (EDR) platform deployed across a multi-VM homelab environment. Built as part of an active cybersecurity portfolio documenting hands-on SOC analyst skills.
 
@@ -6,11 +6,10 @@
 
 ## Project Overview
 
-This project documents the full deployment of a **Wazuh v4.7.5 SIEM/EDR stack** on a Parrot OS virtual machine, with a Windows 11 endpoint enrolled as a monitored agent. The lab simulates real-world threat detection scenarios including brute force authentication attacks and automated compliance scanning.
+This project documents the full deployment of a **Wazuh v4.7.5 SIEM/EDR stack** on a Parrot OS virtual machine, with a Windows Server 2025 endpoint enrolled as a monitored agent. The lab simulates real-world threat detection scenarios including brute force authentication attacks and automated compliance scanning.
 
 **Completed:** May 1, 2026
 **Analyst:** Kiante Nolen
-**Certification Target:** CompTIA Security+ SY0-701 | AWS Cloud Practitioner
 
 ---
 
@@ -21,7 +20,7 @@ This project documents the full deployment of a **Wazuh v4.7.5 SIEM/EDR stack** 
 │                  Windows Host Machine                │
 │                                                     │
 │  ┌──────────────────┐      ┌──────────────────────┐ │
-│  │   Parrot OS VM   │      │   Windows 11 VM      │ │
+│  │   Parrot OS VM   │      │  Windows Server 2025 │ │
 │  │                  │      │                      │ │
 │  │  Wazuh Manager   │◄────►│   Wazuh Agent 001    │ │
 │  │  Wazuh Indexer   │      │   (windows-victim)   │ │
@@ -40,7 +39,7 @@ This project documents the full deployment of a **Wazuh v4.7.5 SIEM/EDR stack** 
 |---|---|
 | Hypervisor | Oracle VirtualBox |
 | Manager OS | Parrot OS (Debian-based) |
-| Agent OS | Microsoft Windows 11 |
+| Agent OS | Microsoft Windows Server 2025 |
 | EDR Platform | Wazuh v4.7.5 |
 | Network Type | VirtualBox Host-Only Adapter |
 | Manager IP | 192.168.56.101 |
@@ -63,7 +62,7 @@ This project documents the full deployment of a **Wazuh v4.7.5 SIEM/EDR stack** 
 - Maintained NAT adapter on both VMs for internet access during package installation
 
 ### 3. Windows Agent Enrollment
-- Downloaded and silently installed Wazuh Agent v4.7.5 MSI on Windows 11 VM
+- Downloaded and silently installed Wazuh Agent v4.7.5 MSI on Windows Server 2025 VM
 - Enrolled agent pointing to manager at `192.168.56.101`
 - Confirmed Agent ID 001 (`windows-victim`) reporting Active status in dashboard
 
@@ -74,7 +73,7 @@ This project documents the full deployment of a **Wazuh v4.7.5 SIEM/EDR stack** 
 - Confirmed MITRE ATT&CK tagging: **T1078** (Valid Accounts), **T1531** (Account Access Removal)
 
 ### 5. Security Configuration Assessment (SCA)
-- Wazuh automatically ran CIS Microsoft Windows 11 Enterprise Benchmark v1.0.0 scan on agent registration
+- Wazuh automatically ran CIS Microsoft Windows Server 2025 Benchmark scan on agent registration
 - Results: **126 passed / 261 failed / 8 N/A — 32% compliance score**
 - Identified hardening gaps across access control, audit policy, and service configuration
 
@@ -168,11 +167,11 @@ A full mock incident report (`IR-2026-001-Wazuh-EDR-Lab.md`) is included in this
 
 ---
 
-## Certifications Targeted
+## Certifications
 
-- CompTIA Security+ SY0-701 (Domain 2: Threats, Vulnerabilities & Mitigations)
-- AWS Cloud Practitioner
-- CompTIA Network+
+- CompTIA Security+ (SY0-701)
+- Google AI Essentials
+- Google Prompting Essentials
 
 ---
 
