@@ -106,16 +106,29 @@ This project documents the full deployment of a **Wazuh v4.7.5 SIEM/EDR stack** 
 
 ## Screenshots
 
-| File | Description |
-|---|---|
-| `screenshots/wazuh-agent-active-windows-victim.png` | Terminal confirming Agent 001 Active |
-| `screenshots/wazuh-dashboard-agent-connected.png` | Dashboard agent page with SCA scan |
-| `screenshots/wazuh-dashboard-agent-connected-mid.png` | Security alerts table with MITRE tags |
-| `screenshots/wazuh-dashboard-auth-failure-alerts-top.png` | Dashboard summary — auth failure metrics |
-| `screenshots/wazuh-rule-60122-logon-failures.png` | Events filtered by rule.id:60122 |
-| `screenshots/wazuh-alert-detail-60122.png` | Expanded forensic alert detail |
-| `screenshots/dashboard-top.png` | Wazuh modules overview |
-| `screenshots/dashboard-bottom.png` | Compliance and threat detection modules |
+### Agent Active — Terminal Confirmation
+![Agent Active](screenshots/wazuh-agent-active-windows-victim.png)
+
+### Wazuh Dashboard — Agent Connected
+![Agent Connected](screenshots/wazuh-dashboard-agent-connected.png)
+
+### Security Alerts Table with MITRE ATT&CK Tags
+![Agent Connected Mid](screenshots/wazuh-dashboard-agent-connected-mid.png)
+
+### Dashboard Summary — Authentication Failure Metrics
+![Auth Failure Alerts](screenshots/wazuh-dashboard-auth-failure-alerts-top.png)
+
+### Events Filtered by Rule ID 60122
+![Rule 60122 Logon Failures](screenshots/wazuh-rule-60122-logon-failures.png)
+
+### Expanded Forensic Alert Detail
+![Alert Detail](screenshots/wazuh-alert-detail-60122.png)
+
+### Wazuh Modules Overview
+![Dashboard Top](screenshots/dashboard-top.png)
+
+### Compliance and Threat Detection Modules
+![Dashboard Bottom](screenshots/dashboard-bottom.png)
 
 ---
 
