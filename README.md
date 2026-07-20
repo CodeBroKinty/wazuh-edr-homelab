@@ -6,7 +6,7 @@
 
 ## Project Overview
 
-This project documents the full deployment of a **Wazuh v4.7.5 SIEM/EDR stack** on a Parrot OS virtual machine, with a Windows Server 2025 endpoint enrolled as a monitored agent. The lab simulates real-world threat detection scenarios including brute force authentication attacks and automated compliance scanning.
+This project documents the full deployment of a Wazuh v4.7.5 SIEM/EDR stack on a Parrot OS virtual machine, with a Windows Server 2025 endpoint enrolled as a monitored agent. The lab simulates real-world threat detection scenarios including brute force authentication attacks and automated compliance scanning.
 
 **Completed:** May 1, 2026
 **Analyst:** Kiante Nolen
@@ -51,37 +51,37 @@ This project documents the full deployment of a **Wazuh v4.7.5 SIEM/EDR stack** 
 
 ### 1. Wazuh Stack Deployment (Parrot OS)
 - Installed Wazuh Manager, Indexer (OpenSearch), Dashboard, and Filebeat as a single-node cluster
-- Resolved Parrot OS compatibility (Debian-based, not officially supported) using `-i` flag and manual dependency mocking via `equivs`
+- Resolved Parrot OS compatibility issues (Debian-based, not officially supported) using the -i flag and manual dependency mocking via equivs
 - Configured btrfs-compatible swap (2GB) to handle OpenSearch memory requirements
-- Tuned JVM heap to `512m` to stabilize indexer on 6GB VM RAM
+- Tuned JVM heap to 512m to stabilize the indexer on 6GB VM RAM
 - Created missing log directories required by the OpenSearch GC logger
 
 ### 2. Network Configuration
-- Configured VirtualBox Host-Only Adapter (`vboxnet0`) on both VMs
-- Verified bidirectional connectivity via ICMP ping between `192.168.56.101` and `192.168.56.102`
+- Configured VirtualBox Host-Only Adapter (vboxnet0) on both VMs
+- Verified bidirectional connectivity via ICMP ping between 192.168.56.101 and 192.168.56.102
 - Maintained NAT adapter on both VMs for internet access during package installation
 
 ### 3. Windows Agent Enrollment
 - Downloaded and silently installed Wazuh Agent v4.7.5 MSI on Windows Server 2025 VM
-- Enrolled agent pointing to manager at `192.168.56.101`
-- Confirmed Agent ID 001 (`windows-victim`) reporting Active status in dashboard
+- Enrolled agent pointing to manager at 192.168.56.101
+- Confirmed Agent ID 001 (windows-victim) reporting Active status in dashboard
 
-### 4. Threat Detection — Brute Force Simulation
-- Enabled Windows audit policy for logon failure events via `auditpol`
-- Simulated brute force attack using repeated `net use` authentication failures against local Administrator account
-- Generated **16 Rule 60122 alerts** (Logon failure — Unknown user or bad password)
-- Confirmed MITRE ATT&CK tagging: **T1078** (Valid Accounts), **T1531** (Account Access Removal)
+### 4. Threat Detection: Brute Force Simulation
+- Enabled Windows audit policy for logon failure events via auditpol
+- Simulated brute force attack using repeated net use authentication failures against local Administrator account
+- Generated 16 Rule 60122 alerts (Logon failure, Unknown user or bad password)
+- Confirmed MITRE ATT&CK tagging: T1078 (Valid Accounts) and T1531 (Account Access Removal)
 
 ### 5. Security Configuration Assessment (SCA)
 - Wazuh automatically ran CIS Microsoft Windows Server 2025 Benchmark scan on agent registration
-- Results: **126 passed / 261 failed / 8 N/A — 32% compliance score**
+- Results: 126 passed / 261 failed / 8 N/A, resulting in a 32% compliance score
 - Identified hardening gaps across access control, audit policy, and service configuration
 
 ---
 
 ## Alert Evidence
 
-### Rule 60122 — Brute Force Authentication Failure
+### Rule 60122: Brute Force Authentication Failure
 
 | Field | Value |
 |---|---|
@@ -106,16 +106,16 @@ This project documents the full deployment of a **Wazuh v4.7.5 SIEM/EDR stack** 
 
 ## Screenshots
 
-### Agent Active — Terminal Confirmation
+### Agent Active: Terminal Confirmation
 ![Agent Active](screenshots/wazuh-agent-active-windows-victim.png)
 
-### Wazuh Dashboard — Agent Connected
+### Wazuh Dashboard: Agent Connected
 ![Agent Connected](screenshots/wazuh-dashboard-agent-connected.png)
 
 ### Security Alerts Table with MITRE ATT&CK Tags
 ![Agent Connected Mid](screenshots/wazuh-dashboard-agent-connected-mid.png)
 
-### Dashboard Summary — Authentication Failure Metrics
+### Dashboard Summary: Authentication Failure Metrics
 ![Auth Failure Alerts](screenshots/wazuh-dashboard-auth-failure-alerts-top.png)
 
 ### Events Filtered by Rule ID 60122
@@ -134,7 +134,7 @@ This project documents the full deployment of a **Wazuh v4.7.5 SIEM/EDR stack** 
 
 ## Incident Report
 
-A full mock incident report (`IR-2026-001-Wazuh-EDR-Lab.md`) is included in this repository documenting:
+A full mock incident report (IR-2026-001-Wazuh-EDR-Lab.md) is included in this repository documenting:
 - Incident timeline with exact timestamps
 - Full IOC table (status codes, SIDs, auth packages)
 - Technical analysis with MITRE ATT&CK mapping
@@ -147,27 +147,27 @@ A full mock incident report (`IR-2026-001-Wazuh-EDR-Lab.md`) is included in this
 
 | Challenge | Solution |
 |---|---|
-| Parrot OS not supported by Wazuh installer | Used `-i` flag to bypass OS check |
-| `software-properties-common` unavailable on Parrot | Created dummy package via `equivs` |
-| OOM kill during install (3.8GB RAM) | Increased VM RAM to 6GB + added 2GB btrfs swap |
-| btrfs incompatible with standard swapfile | Used `btrfs filesystem mkswapfile` method |
-| OpenSearch heap too large (1958m auto-set) | Manually capped to `512m` in `jvm.options` |
-| Missing GC log directory crashed indexer | Created `/var/log/wazuh-indexer/` with correct permissions |
-| VMs couldn't communicate (NAT isolation) | Added Host-Only Adapter (vboxnet0) to both VMs |
-| Windows audit policy not logging failures | Enabled via `auditpol /set /subcategory:"Logon" /failure:enable` |
+| Parrot OS not supported by Wazuh installer | Used -i flag to bypass OS check |
+| software-properties-common unavailable on Parrot | Created dummy package via equivs |
+| OOM kill during install (3.8GB RAM) | Increased VM RAM to 6GB and added 2GB btrfs swap |
+| btrfs incompatible with standard swapfile | Used btrfs filesystem mkswapfile method |
+| OpenSearch heap too large (1958m auto-set) | Manually capped to 512m in jvm.options |
+| Missing GC log directory crashed indexer | Created /var/log/wazuh-indexer/ with correct permissions |
+| VMs could not communicate (NAT isolation) | Added Host-Only Adapter (vboxnet0) to both VMs |
+| Windows audit policy not logging failures | Enabled via auditpol /set /subcategory:"Logon" /failure:enable |
 | Filebeat stopped shipping alerts | Re-enabled and started Filebeat service |
 
 ---
 
 ## Skills Demonstrated
 
-- **SIEM/EDR Deployment** — Single-node Wazuh stack from scratch
-- **Linux Administration** — Service management, memory tuning, filesystem configuration
-- **Network Configuration** — VirtualBox networking, Host-Only adapters, connectivity troubleshooting
-- **Windows Security** — Audit policy configuration, event log analysis, Windows Event IDs
-- **Threat Detection** — Brute force simulation, rule-based alerting, MITRE ATT&CK mapping
-- **Incident Response** — Alert triage, forensic data analysis, formal incident report writing
-- **Compliance** — CIS benchmark interpretation, SCA findings analysis
+- **SIEM/EDR Deployment:** Single-node Wazuh stack deployed from scratch
+- **Linux Administration:** Service management, memory tuning, filesystem configuration
+- **Network Configuration:** VirtualBox networking, Host-Only adapters, connectivity troubleshooting
+- **Windows Security:** Audit policy configuration, event log analysis, Windows Event IDs
+- **Threat Detection:** Brute force simulation, rule-based alerting, MITRE ATT&CK mapping
+- **Incident Response:** Alert triage, forensic data analysis, formal incident report writing
+- **Compliance:** CIS benchmark interpretation and SCA findings analysis
 
 ---
 
@@ -204,6 +204,19 @@ wazuh-edr-homelab/
     ├── dashboard-top.png
     └── dashboard-bottom.png
 ```
+
+---
+
+## Related Projects
+
+- [AD IAM Auditor](https://github.com/kl-nln/ad-iam-auditor)
+  Live Active Directory security auditing with automated PDF and HTML report generation
+- [Python Security Automation Labs](https://github.com/kl-nln/python-automation-labs)
+  18 production-ready security automation tools across AWS security, network recon, and threat detection
+- [Splunk SIEM Lab](https://github.com/kl-nln/splunk-lab)
+  SIEM environment with SPL queries built to detect authentication threats and anomalous behavior
+- [Wireshark Network Traffic Analysis Lab](https://github.com/kl-nln/wireshark-lab)
+  Packet analysis and network forensics lab documenting real threat traffic
 
 ---
 
